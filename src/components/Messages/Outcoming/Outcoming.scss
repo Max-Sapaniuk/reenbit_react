@@ -1,0 +1,28 @@
+@use "../../../variables";
+
+.outcoming {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 75px;
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
+   //.outcoming__message
+  &__message {
+    background-color: variables.$outcomingBackground;
+    padding: 15px;
+    border-radius: 35px;
+    align-self: center;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  // .outcoming__date
+  &__date {
+    font-size: 15px;
+    padding-right: 10px;
+    padding-top: 10px;
+    opacity: 0.5;
+  }
+}

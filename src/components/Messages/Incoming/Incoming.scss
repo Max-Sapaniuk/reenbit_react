@@ -1,0 +1,41 @@
+@use "../../../variables";
+
+.incoming {
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
+
+  // .incoming__data
+  &__data {
+    display: flex;
+    gap: 10px;
+    margin-right: 75px;
+  }
+
+  // .incoming__profile
+  &__profile {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  // .incoming__message
+  &__message {
+    padding: 15px;
+    background-color: variables.$incomingBackground;
+    border-radius: 35px;
+    color: white;
+    align-self: center;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  // .incoming__date
+  &__date {
+    font-size: 15px;
+    padding-left: 75px;
+    padding-top: 10px;
+    opacity: 0.5;
+  }
+}

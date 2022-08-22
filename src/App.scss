@@ -1,0 +1,17 @@
+@use "variables";
+
+.app {
+  display: flex;
+  // .app__left
+  &__left {
+    border-right: variables.$border;
+    width: 35%;
+    height: 100vh;
+  }
+
+  // .app__right
+  &__right {
+    width: 65%;
+    height: 100vh;
+  }
+}

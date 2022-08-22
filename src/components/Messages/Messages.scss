@@ -1,0 +1,78 @@
+@use "../../variables";
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: variables.$secondaryBackground;
+  // .messages__header
+  &__header {
+    display: flex;
+    background-color: variables.$mainBackground;
+    border-bottom: variables.$border;
+    height: 100px;
+    align-items: center;
+  }
+
+  // .messages__header-profile
+  &__header-profile {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    margin: 0 20px;
+  }
+
+  // .messages__header-name
+  &__header-name {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  // .messages__body
+  &__body {
+    flex-basis: 100%;
+    overflow: scroll;
+    overflow-x:hidden;
+    overflow-y: auto;
+    border-bottom: variables.$border;
+    padding: 15px;
+    &::-webkit-scrollbar {
+      background-color: white;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb{
+      background-color: variables.$incomingBackground;
+    }
+  }
+
+  // .messages__footer
+  &__footer {
+    position: relative;
+    height: 160px;
+    background-color: variables.$mainBackground;
+    display: flex;
+    align-items: center;
+    padding: 0 15px 0 30px;
+  }
+
+  // .messages__footer-input
+  &__footer-input {
+    flex-basis: 100%;
+    border-radius: 25px;
+    padding: 15px;
+    border: variables.$border;
+    font-size: 18px;
+    &::placeholder {
+      //font-size: 18px;
+      opacity: 0.4;
+    }
+  }
+
+  // .messages__footer-icon
+  &__footer-icon {
+    position: absolute;
+    right: 35px;
+    font-size: 20px;
+  }
+}
