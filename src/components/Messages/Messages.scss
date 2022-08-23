@@ -48,6 +48,10 @@
 
   // .messages__footer
   &__footer {
+
+  }
+  // .messages__footer-input
+  &__footer-form{
     position: relative;
     height: 160px;
     background-color: variables.$mainBackground;
@@ -64,15 +68,32 @@
     border: variables.$border;
     font-size: 18px;
     &::placeholder {
-      //font-size: 18px;
       opacity: 0.4;
     }
   }
 
+  // .messages__footer-button
+  &__footer-button {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    padding: 15px 30px 15px 30px;
+    margin-right: 15px;
+    border-radius: 0 25px 25px 0;
+    border: 0;
+    background-color: transparent;
+  }
+
   // .messages__footer-icon
   &__footer-icon {
-    position: absolute;
-    right: 35px;
     font-size: 20px;
+  }
+
+  // .messages__footer-error
+  &__footer-error {
+    position: absolute;
+    left: 45px;
+    bottom: 30px;
+    color: red;
   }
 }

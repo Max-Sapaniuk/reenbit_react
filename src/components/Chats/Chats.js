@@ -1,13 +1,17 @@
 import "./Chats.scss"
 import Profile from "../common/Profile/Profile";
-import avatar1 from "./avatar1.jpg";
-import avatar2 from "./avatar2.jpg";
-import avatar3 from "./avatar3.jpg";
+import {useDispatch, useSelector} from "react-redux";
+import {setSelectedUserId} from "../../store/mainSlice";
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function Chats() {
-    const date = new Date()
+    const currentUserId = useSelector(state => state.main.currentUser.id)
+    const selectedUserId = useSelector(state => state.main.selectedUserId)
+    const allUsers = useSelector(state => state.main.allUsers)
+    const allMessages = useSelector(state => state.main.allMessages)
+    const dispatch = useDispatch()
+
     return (
         <div className="chats">
             <div className="chats__container">
@@ -15,75 +19,26 @@ function Chats() {
                     <h1>Chats</h1>
                 </div>
                 <ul className="chats__list">
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar1} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Dwayne Johnson</div>
-                            <div className="chats__list-message">Hello</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar2} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-                            <div className="chats__list-name">Gal Gadot</div>
-                            <div className="chats__list-message">Hi</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar3} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Ryan Reynolds</div>
-                            <div className="chats__list-message">Hello!!!</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar3} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Ryan Reynolds</div>
-                            <div className="chats__list-message">Hello!!!</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar3} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Ryan Reynolds</div>
-                            <div className="chats__list-message">Hello!!!</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar3} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Ryan Reynolds</div>
-                            <div className="chats__list-message">Hello!!!</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
-                    <li className="chats__list-item" role="button" tabIndex={0}>
-                        <Profile avatar={avatar3} isOnline={true} className="chats__list-profile"/>
-                        <div className="chats__list-data">
-
-                            <div className="chats__list-name">Ryan Reynolds</div>
-                            <div className="chats__list-message">Hello!!!</div>
-                        </div>
-                        <div
-                            className="chats__list-date">{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</div>
-                    </li>
+                    {allUsers.map((user) => {
+                        const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(user.id)).messages
+                        const lastMessageDate = new Date(messages[messages.length - 1].message.date)
+                        return (
+                            <li className={`chats__list-item ${user.id === selectedUserId ? "chats__list-item_selected" : ""}`}
+                                role="button"
+                                tabIndex={0}
+                                key={user.id}
+                                onClick={() => {
+                                    dispatch(setSelectedUserId({selectedUserId: user.id}))
+                                }}>
+                                <Profile avatar={user.avatar} isOnline={user.isOnline} className="chats__list-profile"/>
+                                <div className="chats__list-data">
+                                    <div className="chats__list-name">{user.username}</div>
+                                    <div className="chats__list-message">{messages[messages.length - 1].message.text}</div>
+                                </div>
+                                <div className="chats__list-date">{`${monthNames[lastMessageDate.getMonth()]} ${lastMessageDate.getDate()}, ${lastMessageDate.getFullYear()}`}</div>
+                            </li>
+                        )
+                    })}
                 </ul>
             </div>
         </div>

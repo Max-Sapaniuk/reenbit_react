@@ -48,6 +48,12 @@
     &:not(:first-child) {
       border-top: 1px solid #E0E0E0;
     }
+    &_selected {
+      background-color: rgba(0, 0, 0, 0.2);
+      &:hover{
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
   }
 
   // .chats__list-profile
