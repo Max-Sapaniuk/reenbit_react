@@ -6,7 +6,8 @@ import Incoming from "./Incoming/Incoming";
 import Outcoming from "./Outcoming/Outcoming";
 import {useDispatch, useSelector} from "react-redux";
 import { useFormik } from 'formik';
-import {sendMessage} from "../../store/mainSlice";
+import {getResponseMessage, sendMessage} from "../../store/mainSlice";
+import {useEffect, useRef} from "react";
 
 const validate = values => {
     const errors = {};
@@ -23,6 +24,12 @@ function Messages() {
     const allMessages = useSelector(state => state.main.allMessages)
     const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(selectedUserId)).messages
     const dispatch = useDispatch()
+    const bottomRef = useRef(null);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({behavior: 'auto'});
+    })
+
     const formik = useFormik({
         initialValues: {
             message: '',
@@ -34,6 +41,12 @@ function Messages() {
                 date: new Date().toString()
             }))
             resetForm()
+            await setTimeout(async () => {
+                await dispatch(getResponseMessage({
+                    currentUser: currentUserId,
+                    selectedUser: selectedUserId,
+                }))
+            }, Math.random() * (15000 - 10000) + 10000)
         },
     });
 
@@ -46,17 +59,18 @@ function Messages() {
             </div>
             <div className="messages__body">
                 {
-                    messages.map(value => {
+                    messages.map((value, index) => {
                         if (value.senderId === currentUserId)
                             return (
-                                <Outcoming message={value.message.text} date={new Date(value.message.date).toLocaleString()}/>
+                                <Outcoming message={value.message.text} date={new Date(value.message.date).toLocaleString()} key={index}/>
                             )
                         else
                             return (
-                                <Incoming avatar={selectedUser.avatar} message={value.message.text} date={new Date(value.message.date).toLocaleString()}/>
+                                <Incoming avatar={selectedUser.avatar} message={value.message.text} date={new Date(value.message.date).toLocaleString()} key={index}/>
                             )
                     })
                 }
+                <div ref={bottomRef} />
             </div>
             <div className="messages__footer">
                 <form onSubmit={formik.handleSubmit} className="messages__footer-form">
