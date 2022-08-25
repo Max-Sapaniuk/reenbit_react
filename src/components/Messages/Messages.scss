@@ -11,8 +11,9 @@
     display: flex;
     background-color: variables.$mainBackground;
     border-bottom: variables.$border;
-    height: 100px;
+    height: 75px;
     align-items: center;
+    flex-shrink: 0;
   }
 
   // .messages__header-profile

@@ -219,6 +219,10 @@ const initialState = {
             ]
         },
     ],
+    notification: {
+        status: false,
+        sender: null
+    }
 }
 
 export const getResponseMessage = createAsyncThunk(
@@ -291,18 +295,16 @@ export const mainSlice = createSlice({
         },
         sendMessage: send,
         sortUsers: sortAllUsers,
-        // startNewChat: (state, action) => {
-        //     state.allMessages.push({
-        //         users: [action.payload.user1, action.payload.user2],
-        //         messages: []
-        //     })
-        // }
+        removeNotification: state => {
+            state.notification.status = false
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(getResponseMessage.fulfilled, (state, action) => {
             const audio = new Audio('assets/audio/notification.mp3')
-            audio.play()
-            console.log("You got new message from", action.payload.selectedUser)
+            audio.play();
+            state.notification.sender = state.allUsers.find(user => user.id === action.payload.selectedUser).username
+            state.notification.status = true
             send(state, action)
         })
         builder.addCase(getResponseMessage.rejected, (state, action) => {
@@ -312,6 +314,6 @@ export const mainSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {setSelectedUserId, sendMessage, setSearchField, sortUsers} = mainSlice.actions
+export const {setSelectedUserId, sendMessage, setSearchField, sortUsers, removeNotification} = mainSlice.actions
 
 export default mainSlice.reducer

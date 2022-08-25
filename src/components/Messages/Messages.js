@@ -25,14 +25,12 @@ function Messages() {
     const dispatch = useDispatch()
     const bottomRef = useRef(null);
     const inputRef = useRef(null);
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({behavior: 'auto'});
-        inputRef.current?.focus()
-    })
+
     const formik = useFormik({
         initialValues: JSON.parse(localStorage.getItem('formikMessage')) ?? {
             message: '',
         },
+        enableReinitialize: true,
         validate,
         onSubmit: async (values, {resetForm}) => {
             await dispatch(sendMessage({
@@ -40,20 +38,33 @@ function Messages() {
                 date: new Date().toString()
             }))
             localStorage.removeItem('formikMessage')
+            formik.initialValues = {
+                message: '',
+            }
             resetForm()
-            await setTimeout(async () => {
-                await dispatch(getResponseMessage({
+            setTimeout(async () => {
+                dispatch(getResponseMessage({
                     currentUser: currentUserId,
                     selectedUser: selectedUserId,
                 }))
-            }, Math.random() * (15000 - 10000) + 10000)
+            }, 2000)
+            // }, Math.random() * (15000 - 10000) + 10000)
         },
     });
+
+    const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(selectedUserId))?.messages
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({behavior: 'auto'});
+    }, [messages])
+
+    useEffect(() => {
+        inputRef.current?.focus()
+    }, [selectedUserId])
 
     if (selectedUserId === null)
         return null
 
-    const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(selectedUserId))?.messages
     return (
         <div className="messages">
             <div className="messages__header">

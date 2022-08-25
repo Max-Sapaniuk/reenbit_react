@@ -11,8 +11,16 @@
 
   // .app__right
   &__right {
+    z-index: 1;
     width: 65%;
     height: 100vh;
     background-color: variables.$secondaryBackground;
+  }
+
+  &__notification {
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    right: 20px;
   }
 }
