@@ -5,7 +5,7 @@ import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import Incoming from "./Incoming/Incoming";
 import Outcoming from "./Outcoming/Outcoming";
 import {useDispatch, useSelector} from "react-redux";
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import {getResponseMessage, sendMessage} from "../../store/mainSlice";
 import {useEffect, useRef} from "react";
 
@@ -22,16 +22,15 @@ function Messages() {
     const selectedUserId = useSelector(state => state.main.selectedUserId)
     const selectedUser = useSelector(state => state.main.allUsers.find((element) => element.id === selectedUserId))
     const allMessages = useSelector(state => state.main.allMessages)
-    const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(selectedUserId)).messages
     const dispatch = useDispatch()
     const bottomRef = useRef(null);
-
+    const inputRef = useRef(null);
     useEffect(() => {
         bottomRef.current?.scrollIntoView({behavior: 'auto'});
+        inputRef.current?.focus()
     })
-
     const formik = useFormik({
-        initialValues: {
+        initialValues: JSON.parse(localStorage.getItem('formikMessage')) ?? {
             message: '',
         },
         validate,
@@ -40,6 +39,7 @@ function Messages() {
                 text: values.message,
                 date: new Date().toString()
             }))
+            localStorage.removeItem('formikMessage')
             resetForm()
             await setTimeout(async () => {
                 await dispatch(getResponseMessage({
@@ -50,6 +50,10 @@ function Messages() {
         },
     });
 
+    if (selectedUserId === null)
+        return null
+
+    const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(selectedUserId))?.messages
     return (
         <div className="messages">
             <div className="messages__header">
@@ -59,29 +63,44 @@ function Messages() {
             </div>
             <div className="messages__body">
                 {
-                    messages.map((value, index) => {
-                        if (value.senderId === currentUserId)
-                            return (
-                                <Outcoming message={value.message.text} date={new Date(value.message.date).toLocaleString()} key={index}/>
-                            )
-                        else
-                            return (
-                                <Incoming avatar={selectedUser.avatar} message={value.message.text} date={new Date(value.message.date).toLocaleString()} key={index}/>
-                            )
-                    })
+                    messages !== undefined ?
+                        messages.map((value, index) => {
+                            if (value.senderId === currentUserId)
+                                return (
+                                    <Outcoming message={value.message.text}
+                                               date={new Date(value.message.date).toLocaleString()} key={index}/>
+                                )
+                            else
+                                return (
+                                    <Incoming avatar={selectedUser.avatar} message={value.message.text}
+                                              date={new Date(value.message.date).toLocaleString()} key={index}/>
+                                )
+                        })
+                        : <div className="messages__body-start">Say hello to {selectedUser.username}!</div>
                 }
-                <div ref={bottomRef} />
+                <div ref={bottomRef}/>
             </div>
             <div className="messages__footer">
                 <form onSubmit={formik.handleSubmit} className="messages__footer-form">
                     <input type="text"
                            name="message"
-                           onChange={formik.handleChange}
+                           onChange={(event) => {
+                               formik.handleChange(event)
+                               localStorage.setItem('formikMessage', JSON.stringify({
+                                   ...formik.values,
+                                   message: event.target.value
+                               }))
+                           }}
                            value={formik.values.message}
                            placeholder="Type your message"
-                           className="messages__footer-input"/>
-                    {formik.errors.message ? <div className="messages__footer-error">{formik.errors.message}</div> : null}
-                    <button type="submit" className="messages__footer-button"><FontAwesomeIcon icon={faPaperPlane} className="messages__footer-icon"/></button>
+                           className="messages__footer-input"
+                           ref={inputRef}
+                    />
+                    {formik.errors.message ?
+                        <div className="messages__footer-error">{formik.errors.message}</div> : null}
+                    <button type="submit" className="messages__footer-button"><FontAwesomeIcon icon={faPaperPlane}
+                                                                                               className="messages__footer-icon"/>
+                    </button>
                 </form>
             </div>
         </div>

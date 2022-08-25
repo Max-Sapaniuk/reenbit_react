@@ -46,6 +46,17 @@
     }
   }
 
+  // .messages__body-start
+  &__body-start {
+    text-align: center;
+    font-size: 22px;
+    opacity: 0.8;
+    font-style: italic;
+    padding: 15px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
   // .messages__footer
   &__footer {
 
