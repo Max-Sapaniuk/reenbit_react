@@ -10,7 +10,7 @@ function Notification() {
     useEffect(() => {
         if (notificationStatus)
             setTimeout(() => dispatch(removeNotification()), 2000)
-    })
+    }, [dispatch, notificationStatus])
 
     return (
         <div className={`notification ${notificationStatus ? 'notification_visible' : 'notification_hidden'}`}>

@@ -162,12 +162,6 @@ const initialState = {
                 },
             ]
         },
-        // {
-        //     users: [0, 5],
-        //     messages: [
-        //
-        //     ]
-        // },
         {
             users: [0, 6],
             messages: [
@@ -243,8 +237,11 @@ function sortAllUsers(state) {
         .sort((user1, user2) => {
             const messages1 = state.allMessages.find(value => value.users.includes(state.currentUser.id) && value.users.includes(user1.id))?.messages
             const messages2 = state.allMessages.find(value => value.users.includes(state.currentUser.id) && value.users.includes(user2.id))?.messages
-            if (messages1 === undefined || messages2 === undefined) {
-                return 0
+            if (messages1 === undefined) {
+                return 1
+            }
+            if (messages2 === undefined) {
+                return -1
             }
             const lastMessageDate1 = new Date(messages1[messages1.length - 1].message.date)
             const lastMessageDate2 = new Date(messages2[messages2.length - 1].message.date)
@@ -291,7 +288,7 @@ export const mainSlice = createSlice({
             state.searchField = action.payload
         },
         setSelectedUserId: (state, action) => {
-            state.selectedUserId = action.payload.selectedUserId
+            state.selectedUserId = action.payload
         },
         sendMessage: send,
         sortUsers: sortAllUsers,

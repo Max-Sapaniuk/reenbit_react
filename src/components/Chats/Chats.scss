@@ -1,21 +1,8 @@
 @use "../../variables";
 
 .chats {
-  // .chats__container
-  &__container {
-    width: 100%;
-    height: calc(100vh - 153px);
-    overflow: scroll;
-    overflow-x:hidden;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      background-color: white;
-      width: 7px;
-    }
-    &::-webkit-scrollbar-thumb{
-      background-color: variables.$incomingBackground;
-    }
-  }
+  @include variables.scrollBar;
+  width: 100%;
 
   // .chats__header
   &__header {
@@ -29,11 +16,13 @@
   // .chats__list
   &__list {
     list-style: none;
+    width: 100%;
   }
 
   // .chats__list-item
   &__list-item {
     display: flex;
+    gap: 20px;
     cursor: pointer;
     padding: 30px 20px 30px 15px;
     &:hover{
@@ -67,7 +56,6 @@
   // .chats__list-data
   &__list-data {
     flex-basis: 100%;
-    margin-left: 20px;
   }
 
   // .chats__list-name

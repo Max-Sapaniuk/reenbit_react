@@ -22,10 +22,11 @@ function Chats() {
                     tabIndex={0}
                     key={user.id}
                     onClick={() => {
-                        dispatch(setSelectedUserId({selectedUserId: user.id}))
+                        dispatch(setSelectedUserId(user.id))
                     }}>
-                    <Profile avatar={user.avatar} isOnline={user.isOnline}
-                             className="chats__list-profile"/>
+                    <div className="chats__list-profile">
+                        <Profile avatar={user.avatar} isOnline={user.isOnline}/>
+                    </div>
                     <div className="chats__list-data">
                         <div className="chats__list-name">{user.username}</div>
                         <div className="chats__list-message">Start a new dialogue now!</div>
@@ -42,10 +43,11 @@ function Chats() {
                     tabIndex={0}
                     key={user.id}
                     onClick={() => {
-                        dispatch(setSelectedUserId({selectedUserId: user.id}))
+                        dispatch(setSelectedUserId(user.id))
                     }}>
-                    <Profile avatar={user.avatar} isOnline={user.isOnline}
-                             className="chats__list-profile"/>
+                    <div className="chats__list-profile">
+                        <Profile avatar={user.avatar} isOnline={user.isOnline}/>
+                    </div>
                     <div className="chats__list-data">
                         <div className="chats__list-name">{user.username}</div>
                         <div
@@ -62,20 +64,18 @@ function Chats() {
 
     return (
         <div className="chats">
-            <div className="chats__container">
-                <div className="chats__header">
-                    <h1>Chats</h1>
-                </div>
-                <ul className="chats__list">
-                    {
-                        allChats.every((value) => value === null)
-                            ?
-                            <div className="chats__list-error">No chats were found!</div>
-                            :
-                            allChats
-                    }
-                </ul>
+            <div className="chats__header">
+                <h1>Chats</h1>
             </div>
+            <ul className="chats__list">
+                {
+                    allChats.every((value) => value === null)
+                        ?
+                        <div className="chats__list-error">No chats were found!</div>
+                        :
+                        allChats
+                }
+            </ul>
         </div>
     )
 }

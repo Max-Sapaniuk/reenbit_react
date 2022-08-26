@@ -1,9 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
 import mainReducer from "./mainSlice"
 
-const local = localStorage.getItem('state')
-    ? JSON.parse(localStorage.getItem('state'))
-    : {}
+const local = localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : {}
 
 const store = configureStore({
     reducer: {

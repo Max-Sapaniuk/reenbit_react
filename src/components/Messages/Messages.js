@@ -47,8 +47,7 @@ function Messages() {
                     currentUser: currentUserId,
                     selectedUser: selectedUserId,
                 }))
-            }, 2000)
-            // }, Math.random() * (15000 - 10000) + 10000)
+            }, Math.random() * (15000 - 10000) + 10000)
         },
     });
 
@@ -68,8 +67,9 @@ function Messages() {
     return (
         <div className="messages">
             <div className="messages__header">
-                <Profile avatar={selectedUser.avatar} isOnline={selectedUser.isOnline}
-                         className="messages__header-profile"/>
+                <div className="messages__header-profile">
+                    <Profile avatar={selectedUser.avatar} isOnline={selectedUser.isOnline}/>
+                </div>
                 <div className="messages__header-name">{selectedUser.username}</div>
             </div>
             <div className="messages__body">

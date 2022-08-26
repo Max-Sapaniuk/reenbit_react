@@ -12,8 +12,9 @@ function Header() {
 
     return (
         <div className="header">
-            <div className="header__container">
-                <Profile avatar={currentUser.avatar} isOnline={true} className="header__profile"/>
+                <div className="header__profile">
+                    <Profile avatar={currentUser.avatar} isOnline={true}/>
+                </div>
                 <div className="header__search">
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="header__search-icon"/>
                     <input type="text"
@@ -23,7 +24,6 @@ function Header() {
                            placeholder="Search or start new chat"
                            className="header__search-input"/>
                 </div>
-            </div>
         </div>
     )
 }

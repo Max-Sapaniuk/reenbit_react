@@ -4,10 +4,8 @@ import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 
 function Profile(props) {
     return (
-        <div className={`${props.className} profile`}>
-            <div className="profile__image-container">
-                <img src={props.avatar} alt="Avatar" className="profile__image-item"/>
-            </div>
+        <div className="profile">
+            <img src={props.avatar} alt="Avatar" className="profile__image"/>
             {
                 props.isOnline
                     ?

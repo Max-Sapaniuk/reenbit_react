@@ -1,14 +1,10 @@
 .profile {
   position: relative;
+  width: 100%;
+  height: 100%;
 
-  // .profile__image-container
-  &__image-container {
-    width: 100%;
-    height: 100%;
-  }
-
-  // .profile__image-item
-  &__image-item {
+  // .profile__image
+  &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;

@@ -2,8 +2,11 @@
 
 .app {
   display: flex;
+
   // .app__left
   &__left {
+    display: flex;
+    flex-direction: column;
     border-right: variables.$border;
     width: 35%;
     height: 100vh;
@@ -11,14 +14,13 @@
 
   // .app__right
   &__right {
-    z-index: 1;
     width: 65%;
     height: 100vh;
     background-color: variables.$secondaryBackground;
   }
 
+  // .app__notification
   &__notification {
-    z-index: 100;
     position: absolute;
     top: 20px;
     right: 20px;
