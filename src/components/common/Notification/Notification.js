@@ -15,7 +15,7 @@ function Notification() {
     return (
         <div className={`notification ${notificationStatus ? 'notification_visible' : 'notification_hidden'}`}>
             <div className="notification__title">Notification</div>
-            <div className="notification__body">Yoy got new message from {notificationSender}</div>
+            <div className="notification__body">Yoy got new message from {notificationSender}!</div>
         </div>
     )
 }

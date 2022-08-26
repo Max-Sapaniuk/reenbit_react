@@ -15,28 +15,28 @@ function Chats() {
 
     let allChats = allUsers.map((user) => {
         const messages = allMessages.find(value => value.users.includes(currentUserId) && value.users.includes(user.id))?.messages
-        if (messages === undefined) {
-            return (
-                <li className={`chats__list-item ${user.id === selectedUserId ? "chats__list-item_selected" : ""}`}
-                    role="button"
-                    tabIndex={0}
-                    key={user.id}
-                    onClick={() => {
-                        dispatch(setSelectedUserId(user.id))
-                    }}>
-                    <div className="chats__list-profile">
-                        <Profile avatar={user.avatar} isOnline={user.isOnline}/>
-                    </div>
-                    <div className="chats__list-data">
-                        <div className="chats__list-name">{user.username}</div>
-                        <div className="chats__list-message">Start a new dialogue now!</div>
-
-                    </div>
-                </li>
-            )
-        }
-        const lastMessageDate = new Date(messages[messages.length - 1].message.date)
         if (user.username.match(new RegExp(searchField, "i"))) {
+            if (messages === undefined) {
+                return (
+                    <li className={`chats__list-item ${user.id === selectedUserId ? "chats__list-item_selected" : ""}`}
+                        role="button"
+                        tabIndex={0}
+                        key={user.id}
+                        onClick={() => {
+                            dispatch(setSelectedUserId(user.id))
+                        }}>
+                        <div className="chats__list-profile">
+                            <Profile avatar={user.avatar} isOnline={user.isOnline}/>
+                        </div>
+                        <div className="chats__list-data">
+                            <div className="chats__list-name">{user.username}</div>
+                            <div className="chats__list-message">Start a new dialogue now!</div>
+
+                        </div>
+                    </li>
+                )
+            }
+            const lastMessageDate = new Date(messages[messages.length - 1].message.date)
             return (
                 <li className={`chats__list-item ${user.id === selectedUserId ? "chats__list-item_selected" : ""}`}
                     role="button"
