@@ -18,6 +18,25 @@
     gap: 20px;
   }
 
+  // .messages__header-back
+  &__header-back {
+    display: none;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
+    opacity: 0.6;
+    &:hover {
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: variables.$outcomingBackground;
+    }
+    @include variables.smaller_1024 {
+      display: block;
+    }
+  }
+
   // .messages__header-profile
   &__header-profile {
     width: 50px;

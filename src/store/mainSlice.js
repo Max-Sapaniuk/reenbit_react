@@ -215,7 +215,10 @@ const initialState = {
     ],
     notification: {
         status: false,
-        sender: null
+        sender: null,
+        type: 'success',
+        title: '',
+        body: ''
     }
 }
 
@@ -300,12 +303,23 @@ export const mainSlice = createSlice({
         builder.addCase(getResponseMessage.fulfilled, (state, action) => {
             const audio = new Audio('assets/audio/notification.mp3')
             audio.play();
-            state.notification.sender = state.allUsers.find(user => user.id === action.payload.selectedUser).username
-            state.notification.status = true
+            const sender = state.allUsers.find(user => user.id === action.payload.selectedUser).username
+            state.notification = {
+                status: true,
+                sender: sender,
+                type: 'success',
+                title: 'Notification',
+                body: `Yoy got new message from ${sender}!`
+            }
             send(state, action)
         })
         builder.addCase(getResponseMessage.rejected, (state, action) => {
-            console.error('Something went wrong')
+            state.notification = {
+                status: true,
+                type: 'error',
+                title: 'Error',
+                body: `Could not get data from server!`
+            }
         })
     }
 })

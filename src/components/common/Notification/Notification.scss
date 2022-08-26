@@ -4,13 +4,24 @@
   justify-content: center;
   padding: 20px;
   border-radius: 30px;
-  background-color: lightblue;
-  border: 3px solid #3ab8e3;
-  box-shadow: 2px 2px 10px 0 #3ab8e3;
+
+  // .notification_success
+  &_success {
+    background-color: lightblue;
+    border: 3px solid #3ab8e3;
+    box-shadow: 2px 2px 10px 0 #3ab8e3;
+  }
+
+  // .notification_error
+  &_error {
+    background-color: #d95454;
+    border: 3px solid #e72e2e;
+    box-shadow: 2px 2px 10px 0 #e72e2e;
+  }
 
   // .notification_hidden
   &_hidden {
-    transition: all 3s;
+    transition: all 2s;
     opacity: 0;
     visibility: hidden;
     &:hover {

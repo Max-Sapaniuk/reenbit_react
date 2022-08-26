@@ -1,12 +1,12 @@
 import "./Messages.scss"
 import Profile from "../common/Profile/Profile";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import {faPaperPlane, faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import Incoming from "./Incoming/Incoming";
 import Outcoming from "./Outcoming/Outcoming";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from 'formik';
-import {getResponseMessage, sendMessage} from "../../store/mainSlice";
+import {getResponseMessage, sendMessage, setSelectedUserId} from "../../store/mainSlice";
 import {useEffect, useRef} from "react";
 
 const validate = values => {
@@ -67,6 +67,7 @@ function Messages() {
     return (
         <div className="messages">
             <div className="messages__header">
+                <button className="messages__header-back" onClick={() => {dispatch(setSelectedUserId(null))}}><FontAwesomeIcon icon={faAngleLeft} /></button>
                 <div className="messages__header-profile">
                     <Profile avatar={selectedUser.avatar} isOnline={selectedUser.isOnline}/>
                 </div>

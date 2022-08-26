@@ -3,19 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {removeNotification} from "../../../store/mainSlice";
 
-function Notification() {
-    const notificationStatus = useSelector(state => state.main.notification.status)
-    const notificationSender = useSelector(state => state.main.notification.sender)
+function Notification(props) {
+    const notification = useSelector(state => state.main.notification)
     const dispatch = useDispatch()
     useEffect(() => {
-        if (notificationStatus)
+        if (notification.status)
             setTimeout(() => dispatch(removeNotification()), 2000)
-    }, [dispatch, notificationStatus])
+    }, [dispatch, notification])
 
     return (
-        <div className={`notification ${notificationStatus ? 'notification_visible' : 'notification_hidden'}`}>
-            <div className="notification__title">Notification</div>
-            <div className="notification__body">Yoy got new message from {notificationSender}!</div>
+        <div className={`notification ${notification.status ? 'notification_visible' : 'notification_hidden'} notification_${notification.type}`}>
+            <div className="notification__title">{notification.title}</div>
+            <div className="notification__body">{notification.body}</div>
         </div>
     )
 }

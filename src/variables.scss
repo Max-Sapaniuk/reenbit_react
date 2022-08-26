@@ -4,12 +4,17 @@ $incomingBackground: #3B4253;
 $outcomingBackground: #E0E0E0;
 $border: 2px solid #E0E0E0;
 
+@mixin smaller_1024 {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
 @mixin scrollBar {
   overflow: scroll;
   overflow-x:hidden;
   overflow-y: auto;
   &::-webkit-scrollbar {
-    //display: block;
     background-color: transparent;
     width: 7px;
   }

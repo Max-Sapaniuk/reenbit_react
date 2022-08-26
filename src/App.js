@@ -18,11 +18,11 @@ function App() {
 
     return (
         <div className="app">
-            <div className="app__left">
+            <div className={`app__left ${selectedUserId === null ? '' : 'app__left_hidden'}`}>
                 <Header/>
                 <Chats/>
             </div>
-            <div className="app__right">
+            <div className={`app__right ${selectedUserId === null ? 'app__right_hidden' : ''}`}>
                 <Messages/>
             </div>
             <div className="app__notification">
