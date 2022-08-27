@@ -14,10 +14,10 @@ function Header() {
     const dispatch = useDispatch()
 
     const clientId = process.env.REACT_APP_CLIENT_ID;
-    console.log(clientId)
+
     useEffect(() => {
         const initClient = () => {
-            gapi.client.init({
+            gapi.auth2.init({
                 clientId: clientId,
                 scope: ''
             });
