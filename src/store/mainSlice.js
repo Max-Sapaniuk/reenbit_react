@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 
-const initialState = {
+let initialState = {
     searchField: "",
     currentUser: {
         id: 0,
@@ -219,8 +219,9 @@ const initialState = {
         type: 'success',
         title: '',
         body: ''
-    }
+    },
 }
+initialState = localStorage.getItem('state') ? Object.assign(initialState, JSON.parse(localStorage.getItem('state')).main) : initialState
 
 export const getResponseMessage = createAsyncThunk(
     'main/getResponseMessage',
@@ -297,7 +298,15 @@ export const mainSlice = createSlice({
         sortUsers: sortAllUsers,
         removeNotification: state => {
             state.notification.status = false
-        }
+        },
+        setUser: (state, action) => {
+            state.currentUser = {
+                id: 0,
+                avatar: action.payload.avatar,
+                username: action.payload.username,
+                isOnline: true,
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getResponseMessage.fulfilled, (state, action) => {
@@ -325,6 +334,6 @@ export const mainSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {setSelectedUserId, sendMessage, setSearchField, sortUsers, removeNotification} = mainSlice.actions
+export const {setSelectedUserId, sendMessage, setSearchField, sortUsers, removeNotification, setUser} = mainSlice.actions
 
 export default mainSlice.reducer

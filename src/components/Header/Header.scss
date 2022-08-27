@@ -11,11 +11,30 @@
   border-bottom: variables.$border;
   padding: 15px;
 
-  // .header__profile
-  &__profile {
+  // .header__user
+  &__user {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  // .header__user-profile
+  &__user-profile {
+    flex-shrink: 0;
     width: 50px;
     height: 50px;
     font-size: 20px;
+  }
+
+  // .header__user-name
+  &__user-name {
+    flex-grow: 1;
+    flex-basis: auto;
+  }
+
+  // .header__user-button
+  &__user-button {
+    flex-shrink: 0;
   }
 
   // .header__search

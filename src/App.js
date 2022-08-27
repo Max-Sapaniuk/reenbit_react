@@ -10,7 +10,6 @@ import Notification from "./components/common/Notification/Notification";
 function App() {
     const selectedUserId = useSelector(state => state.main.selectedUserId)
     const dispatch = useDispatch()
-
     useEffect(() => {
         if (selectedUserId === null)
             dispatch(sortUsers())
